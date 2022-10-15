@@ -11,6 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import { useAuth } from "../context/AuthContextProvider";
 import { Link, useHistory } from "react-router-dom";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -39,11 +40,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const { currentUser } = useAuth();
+  const { currentUser,logout } = useAuth();
+  const history = useHistory();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -52,6 +53,17 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    setAnchorEl(null);
+    logout();
+  }; 
+
+  const handleDashboard = () => {
+    setAnchorEl(null);
+    history.push("/");
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
@@ -61,6 +73,7 @@ const Navbar = () => {
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={handleDashboard}
           >
             Logo
           </IconButton>
@@ -99,8 +112,8 @@ const Navbar = () => {
                 <Link to="/new-blog" className={classes.linkStyle}>
                   <MenuItem onClick={handleClose}>New</MenuItem>
                 </Link>
-                <Link to="/" className={classes.linkStyle}>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <Link to="/login" className={classes.linkStyle}>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Link>
               </Menu>
             ) : (
@@ -120,10 +133,10 @@ const Navbar = () => {
                 onClose={handleClose}
               >
                 <Link to="/login" className={classes.linkStyle}>
-                  <MenuItem onClick={handleClose}>Login</MenuItem>
+                  <MenuItem  onClick={handleClose}>Login</MenuItem>
                 </Link>
-                <Link to="/register" className={classes.linkStyle}>
-                  <MenuItem onClick={handleClose}>Register</MenuItem>
+                <Link to="/register" className={classes.linkStyle} >
+                  <MenuItem  onClick={handleClose}>Register</MenuItem>
                 </Link>
                 
               </Menu>
