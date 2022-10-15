@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,6 +8,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import { useAuth } from "../context/AuthContextProvider";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 30,
       color: "wheat",
     },
+    linkStyle: {
+      textDecoration: "none",
+      color: "black",
+    },
   },
 }));
 
@@ -36,6 +42,8 @@ const Navbar = () => {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const { currentUser } = useAuth();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -67,26 +75,59 @@ const Navbar = () => {
               onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle style={{ fontSize: "40px" }}/>
+              <AccountCircle style={{ fontSize: "40px" }} />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Login</MenuItem>
-              <MenuItem onClick={handleClose}>Register</MenuItem>
-            </Menu>
+            {currentUser?.email ? (
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <Link to="/profile" className={classes.linkStyle}>
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                </Link>
+                <Link to="/new-blog" className={classes.linkStyle}>
+                  <MenuItem onClick={handleClose}>New</MenuItem>
+                </Link>
+                <Link to="/" className={classes.linkStyle}>
+                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                </Link>
+              </Menu>
+            ) : (
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <Link to="/login" className={classes.linkStyle}>
+                  <MenuItem onClick={handleClose}>Login</MenuItem>
+                </Link>
+                <Link to="/register" className={classes.linkStyle}>
+                  <MenuItem onClick={handleClose}>Register</MenuItem>
+                </Link>
+                
+              </Menu>
+            )}
           </div>
         </Toolbar>
       </AppBar>
