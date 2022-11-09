@@ -8,6 +8,9 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import blokPng from "../assets/blok.png";
 import { useHistory } from "react-router-dom";
+
+import { Formik, Form } from "formik";
+import * as yup from "yup";
 import { useAuth } from "../context/AuthContextProvider";
 import loadingGif from "../assets/loading.gif";
 import googlePng from "../assets/google.png";
@@ -81,14 +84,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const ValidationSchema = yup.object().shape({
+  email: yup
+    .string("Enter your email")
+    .email("Invalid email address")
+    .required("Required"),
+  password: yup.string("Enter your password").required("password required"),
+});
+
+const LoginAndRegisterForm = (props) => {
+    const { loginWithGoogle } = useAuth();
+    const { handleBlur, handleChange, errors, values, touched, isSubmitting } = props;
+
+    const handleGoogleProvider = () => {
+      loginWithGoogle();
+    };
+  
+      
+console.log(props.method,"****")
   const classes = useStyles();
-  const { loginWithGoogle } = useAuth();
-
-  const handleGoogleProvider = () => {
-    loginWithGoogle();
-  };
-
   return (
     <Grid container className={classes.root}>
       <Grid container justifyContent="center" className={classes.image}>
@@ -98,9 +112,9 @@ const Login = () => {
               <img src={blokPng} style={{ width: 200 }} alt="candela" />
             </Avatar>
             <Typography className={classes.header} component="h1" variant="h5">
-              ── Login ──
+              ── {props.method} ──
             </Typography>
-            <div className={classes.form}>
+            <Form className={classes.form}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -109,7 +123,12 @@ const Login = () => {
                 label="Email"
                 name="email"
                 autoComplete="email"
+                onChange={handleChange}
+                onBlur={handleBlur}
                 autoFocus
+                value={values.email}
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
               />
               <TextField
                 variant="outlined"
@@ -120,32 +139,46 @@ const Login = () => {
                 type="password"
                 id="password"
                 autoComplete="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.password && Boolean(errors.password)}
+                helperText={touched.password && errors.password}
               />
-
-              <div>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  className={classes.submit}
-                >
-                  Login
-                </Button>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={handleGoogleProvider}
-                  className={classes.googleBtn}
-                >
-                  With
+              {isSubmitting ? (
+                <div className={classes.loadingContainer}>
                   <img
-                    src={googlePng}
-                    alt="google"
-                    className={classes.googleImg}
+                    src={loadingGif}
+                    alt="Loading"
+                    className={classes.loadingGif}
                   />
-                </Button>
-              </div>
-            </div>
+                </div>
+              ) : (
+                <div>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    className={classes.submit}
+                  >
+                    {props.method}
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={handleGoogleProvider}
+                    className={classes.googleBtn}
+                  >
+                    With
+                    <img
+                      src={googlePng}
+                      alt="google"
+                      className={classes.googleImg}
+                    />
+                  </Button>
+                </div>
+              )}
+            </Form>
           </Grid>
         </Grid>
       </Grid>
@@ -153,4 +186,32 @@ const Login = () => {
   );
 };
 
-export default Login;
+const Authorization = () => {
+  const history = useHistory();
+  const { signup, login, currentUser } = useAuth();
+  // const [method] = useState(props.method);
+  const classes = useStyles();
+
+  useEffect(() => {
+    if (currentUser) {
+      history.push("/");
+    }
+    console.log({ currentUser });
+  }, [currentUser, history]);
+
+  return (
+    <div>
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        validationSchema={ValidationSchema}
+        onSubmit={(values, actions) => {}}
+        component={LoginAndRegisterForm}
+      ></Formik>
+    </div>
+  );
+};
+
+export default Authorization;
