@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,20 +10,23 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { useAuth } from "../context/AuthContextProvider";
 import { Link, useHistory } from "react-router-dom";
-
+import blogLogo from '../assets/Vahide.png'
+import blogLogo2 from  "../assets/Blog.png"
+import blogLogo3 from  "../assets/Blog(1).png"
+import blogLogo4 from  "../assets/vhd.png"
+import woman from  "../assets/woman.png"
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  appBar: {
-    backgroundColor: "#046582",
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
   title: {
     flexGrow: 1,
     display: "none",
-    fontFamily: "Arial",
-    fontWeight:'400',
+    fontFamily: "Girassol",
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
@@ -31,10 +34,23 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 30,
       color: "wheat",
     },
-    linkStyle: {
-      textDecoration: "none",
-      color: "black",
-    },
+  },
+  appBar: {
+    backgroundColor: "#046582",
+  },
+  logo: {
+    width: 40,
+  },
+  linkStyle: {
+    textDecoration: "none",
+    color: "black",
+  },
+
+  login: {
+    padding: 10,
+    fontSize: 20,
+    color: "white",
+    textDecoration: "none",
   },
 }));
 
@@ -43,7 +59,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const { currentUser,logout } = useAuth();
+  let { currentUser,logout } = useAuth();
   const history = useHistory();
 
   const handleMenu = (event) => {
@@ -75,10 +91,10 @@ const Navbar = () => {
             aria-label="menu"
             onClick={handleDashboard}
           >
-            Logo
+            <img src={woman} style={{ width: 60,borderRadius:'50% '}} alt="candela" />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Blog-App-Project
+          <Typography variant="h4" className={classes.title}>
+            Blog-App
           </Typography>
           <div>
             <IconButton
@@ -88,7 +104,7 @@ const Navbar = () => {
               onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle style={{ fontSize: "40px" }} />
+              <AccountCircle style={{ fontSize: "50px" }} />
             </IconButton>
             {currentUser?.email ? (
               <Menu
