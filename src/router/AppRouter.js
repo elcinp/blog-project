@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import {Login} from "../pages/LoginRegister";
-import {Register} from "../pages/LoginRegister";
+import { Login } from "../pages/LoginRegister";
+import { Register } from "../pages/LoginRegister";
 import Dashboard from "../pages/Dashboard";
 import UpdateBlog from "../pages/UpdateBlog";
 import Detail from "../pages/Detail";
@@ -22,8 +22,8 @@ const AppRouter = () => {
 
         <PrivateRouter path="/profile" component={Profile} />
         <PrivateRouter path="/new-blog" component={NewBlog} />
-        <PrivateRouter path="/update-blog" component={UpdateBlog} />
-        <PrivateRouter path="/detail" component={Detail} />
+        <PrivateRouter path="/update-blog/:id" component={UpdateBlog} />
+        <PrivateRouter path="/detail/:id" component={Detail} />
       </Switch>
     </Router>
   );
