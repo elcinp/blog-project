@@ -1,10 +1,10 @@
 import React from "react";
-import Authorization from "../components/Authorization";
+import Autorization from "../components/Autorization";
 
 export const Login = () => {
-  return <Authorization method="Login" />;
+  return <Autorization method="Login" />;
 };
 
 export const Register = () => {
-  return <Authorization method="Register" />;
+  return <Autorization method="Register" />;
 };
