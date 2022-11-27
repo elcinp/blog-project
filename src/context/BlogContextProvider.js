@@ -12,7 +12,8 @@ export function useBlog() {
 
 // Defining a method for BlogContext.Provider
 export function BlogContextProvider({ children }) {
-  const [currentBlogs, setCurrentBlogs] = useState();
+  const [currentBlogs, setCurrentBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   function addBlog(blogValue) {
     const blogRef = firebaseDB.ref("blogs");
@@ -38,12 +39,14 @@ export function BlogContextProvider({ children }) {
     const blogRef = firebaseDB.ref("blogs");
     blogRef.on("value", (snapshot) => {
       const blogs = snapshot.val();
+      console.log(blogs,"blogs");
       const blogL = [];
       for (let id in blogs) {
         blogL.push({ id, ...blogs[id] });
       }
       setCurrentBlogs(blogL);
     });
+    setLoading(false);
   }, []);
 
   const value = {
@@ -52,6 +55,7 @@ export function BlogContextProvider({ children }) {
     getOneBlog,
     deleteOneBlog,
     updateBlog,
+    loading, 
   };
 
   return <BlogContext.Provider value={value}>{children}</BlogContext.Provider>;

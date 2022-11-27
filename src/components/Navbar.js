@@ -10,10 +10,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { useAuth } from "../context/AuthContextProvider";
 import { Link, useHistory } from "react-router-dom";
-import blogLogo from '../assets/Vahide.png'
-import blogLogo2 from  "../assets/Blog.png"
-import blogLogo3 from  "../assets/Blog(1).png"
-import blogLogo4 from  "../assets/vhd.png"
 import woman from  "../assets/woman.png"
 
 const useStyles = makeStyles((theme) => ({

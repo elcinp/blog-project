@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-  const { currentBlogs } = useBlog();
+  const { currentBlogs,loading } = useBlog();
 
   return (
     <div className={classes.mainRoot}>
@@ -37,9 +37,9 @@ const Dashboard = () => {
         <Grid container className={classes.root} justifyContent="center">
           <Grid item xs={12} >
             <Grid container justifyContent="center" spacing={5}>
-              {currentBlogs === undefined ? (
+              {loading? (
                 <img src={loadingGif} alt="loading" />
-              ) : currentBlogs ? (
+              ) : currentBlogs.length ? (
                 currentBlogs.map((item, id) => (
                   <Grid key={id} item>
                     <BlogCard item={item} />
