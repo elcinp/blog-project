@@ -10,7 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { useAuth } from "../context/AuthContextProvider";
 import { Link, useHistory } from "react-router-dom";
-import woman from  "../assets/woman.png"
+import woman from "../assets/woman.png";
 import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,13 +22,14 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    
+
     fontFamily: "Girassol",
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
     [theme.breakpoints.down("sm")]: {
-      fontSize:'1.8rem'
+      fontSize: "1.8rem",
+      display:'none'
     },
     "& span": {
       fontSize: 30,
@@ -59,7 +60,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  let { currentUser,logout } = useAuth();
+  let { currentUser, logout } = useAuth();
   const history = useHistory();
 
   const handleMenu = (event) => {
@@ -73,7 +74,7 @@ const Navbar = () => {
   const handleLogout = () => {
     setAnchorEl(null);
     logout();
-  }; 
+  };
 
   const handleDashboard = () => {
     setAnchorEl(null);
@@ -83,30 +84,49 @@ const Navbar = () => {
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-            onClick={handleDashboard}
-          >
-            <img src={woman} style={{ width: 70,borderRadius:'50% '}} alt="candela" />
-          </IconButton>
-          <Typography variant="h4" className={classes.title}>
-            Blog-App
-          </Typography>
-            <SearchBar/>
-          <div>
+        <Toolbar style={{display:'flex',justifyContent:'space-between'}}>
+          <div style={{ display: "flex", flexDirection: "row",justifyContent:'center',alignItems:'center' }}>
             <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
+              edge="start"
+              className={classes.menuButton}
               color="inherit"
+              aria-label="menu"
+              onClick={handleDashboard}
             >
-              <AccountCircle style={{ fontSize: "60px" }} />
+              <img
+                src={woman}
+                style={{ width: 70, borderRadius: "50% " }}
+                alt="candela"
+              />
             </IconButton>
+            <Typography variant="h4" className={classes.title}>
+              Blog-App
+            </Typography>
+          </div>
+
+            
+          <div style={{ display: "flex", flexDirection: "row",justifyContent:'center',alignItems:'center' }}>
+            <SearchBar />
+            {currentUser ? (
+              <div onClick={handleMenu}>
+                <img
+                  src="https://img.freepik.com/premium-vector/female-user-profile-avatar-is-woman-character-screen-saver-with-emotions_505620-617.jpg?w=2000"
+                  style={{ width: 50, height: 50, borderRadius: "50% " }}
+                  alt="profile"
+                />{" "}
+              </div>
+            ) : (
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle style={{ fontSize: "60px" }} />
+              </IconButton>
+            )}
+            
             {currentUser?.email ? (
               <Menu
                 id="menu-appbar"
@@ -150,12 +170,11 @@ const Navbar = () => {
                 onClose={handleClose}
               >
                 <Link to="/login" className={classes.linkStyle}>
-                  <MenuItem  onClick={handleClose}>Login</MenuItem>
+                  <MenuItem onClick={handleClose}>Login</MenuItem>
                 </Link>
-                <Link to="/register" className={classes.linkStyle} >
-                  <MenuItem  onClick={handleClose}>Register</MenuItem>
+                <Link to="/register" className={classes.linkStyle}>
+                  <MenuItem onClick={handleClose}>Register</MenuItem>
                 </Link>
-                
               </Menu>
             )}
           </div>

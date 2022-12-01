@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = () => {
   const classes = useStyles();
   const { currentBlogs,loading } = useBlog();
-
+  console.log(currentBlogs, "currentBlogs");
   return (
     <div className={classes.mainRoot}>
       <Typography className={classes.title} variant="h3" noWrap>
@@ -41,9 +41,9 @@ const Dashboard = () => {
         <Grid container className={classes.root} justifyContent="center">
           <Grid item xs={12} >
             <Grid container justifyContent="center" spacing={5}>
-              {loading? (
+            {currentBlogs === undefined ? (
                 <img src={loadingGif} alt="loading" />
-              ) : currentBlogs.length ? (
+              ) : currentBlogs ? (
                 currentBlogs.map((item, id) => (
                   <Grid key={id} item>
                     <BlogCard item={item} />
@@ -56,7 +56,7 @@ const Dashboard = () => {
           </Grid>
         </Grid>
       </>
-        <PaginationSize/>
+        <PaginationSize />
 
     </div>
   );
