@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
-    display: "none",
+    
     fontFamily: "Girassol",
     [theme.breakpoints.up("sm")]: {
       display: "block",
@@ -87,7 +87,7 @@ const Navbar = () => {
             aria-label="menu"
             onClick={handleDashboard}
           >
-            <img src={woman} style={{ width: 60,borderRadius:'50% '}} alt="candela" />
+            <img src={woman} style={{ width: 70,borderRadius:'50% '}} alt="candela" />
           </IconButton>
           <Typography variant="h4" className={classes.title}>
             Blog-App
@@ -100,7 +100,7 @@ const Navbar = () => {
               onClick={handleMenu}
               color="inherit"
             >
-              <AccountCircle style={{ fontSize: "50px" }} />
+              <AccountCircle style={{ fontSize: "60px" }} />
             </IconButton>
             {currentUser?.email ? (
               <Menu

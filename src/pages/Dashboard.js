@@ -5,6 +5,7 @@ import BlogCard from "../components/BlogCard";
 import { useBlog } from "../context/BlogContextProvider";
 import Typography from "@material-ui/core/Typography";
 import loadingGif from "../assets/loading.gif";
+import PaginationSize from "../components/Pagination";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +53,8 @@ const Dashboard = () => {
           </Grid>
         </Grid>
       </>
+        <PaginationSize/>
+
     </div>
   );
 };
