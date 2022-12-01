@@ -11,6 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import { useAuth } from "../context/AuthContextProvider";
 import { Link, useHistory } from "react-router-dom";
 import woman from  "../assets/woman.png"
+import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Girassol",
     [theme.breakpoints.up("sm")]: {
       display: "block",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize:'1.8rem'
     },
     "& span": {
       fontSize: 30,
@@ -92,6 +96,7 @@ const Navbar = () => {
           <Typography variant="h4" className={classes.title}>
             Blog-App
           </Typography>
+            <SearchBar/>
           <div>
             <IconButton
               aria-label="account of current user"
@@ -122,7 +127,7 @@ const Navbar = () => {
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
                 </Link>
                 <Link to="/new-blog" className={classes.linkStyle}>
-                  <MenuItem onClick={handleClose}>New</MenuItem>
+                  <MenuItem onClick={handleClose}>New Blog</MenuItem>
                 </Link>
                 <Link to="/login" className={classes.linkStyle}>
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>

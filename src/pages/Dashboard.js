@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Girassol",
     textAlign: "center",
     color: "#046582",
+    [theme.breakpoints.down("sm")]: {
+      fontSize:'2.2rem'
+    },
   },
   mainRoot: {
     marginTop: 70,

@@ -15,7 +15,12 @@ const useStyles = makeStyles({
     alignItems: "center",
     padding: 25,
   },
-
+  profile:{
+    fontFamily: "Girassol",
+    textAlign: "center",
+    color: "#046582",
+    marginBottom:'2rem',
+  },
   title: {
     fontSize: 14,
   },
@@ -38,13 +43,16 @@ const useStyles = makeStyles({
 const Profile = () => {
   const classes = useStyles();
   const { currentUser } = useAuth();
-  console.log(currentUser);
+  console.log(currentUser,'currentUser');
 
   return (
     <div className={classes.mainDiv}>
+      <Typography className={classes.profile} variant="h3" noWrap>
+        Profile
+      </Typography>
       <Card className={classes.root}>
         <img
-          src={currentUser.photoURL}
+          src='https://img.freepik.com/premium-vector/female-user-profile-avatar-is-woman-character-screen-saver-with-emotions_505620-617.jpg?w=2000'
           className={classes.image}
           alt="profile"
         />
@@ -54,7 +62,7 @@ const Profile = () => {
             color="textSecondary"
             gutterBottom
           >
-            Display Name
+            User Name
           </Typography>
           <Typography variant="h5" component="h2">
             {currentUser?.displayName || "Not Found!"}
